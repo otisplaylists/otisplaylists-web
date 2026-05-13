@@ -1,14 +1,10 @@
+import { useState } from 'react';
 import mockPlaylists from '../data/mockPlaylists.js';
+import SpotifyEmbed from './SpotifyEmbed.jsx';
 
 /**
  * Bento span pattern for 8 cards across a 4-column grid.
  * Each entry: { colSpan, rowSpan }
- *
- * Visual layout (4 cols):
- * Row 1: [card1: 2×2] [card2: 1×1] [card3: 1×1]
- * Row 2: (card1 cont) [card4: 2×1              ]
- * Row 3: [card5: 1×1] [card6: 2×1       ] [card7: 1×1]
- * Row 4: [card8: 4×1                              ]
  */
 const SPAN_PATTERN = [
   { colSpan: 2, rowSpan: 2 }, // 1 — hero card
@@ -25,6 +21,12 @@ const SPAN_PATTERN = [
 const borderColor = (index) => (index % 2 === 0 ? 'cyan' : 'magenta');
 
 export default function BentoLayout() {
+  const [expandedId, setExpandedId] = useState(null);
+
+  const handleCardClick = (id) => {
+    setExpandedId(expandedId === id ? null : id);
+  };
+
   return (
     <div className="bento-page">
       {/* ── Header ── */}
@@ -54,14 +56,18 @@ export default function BentoLayout() {
           const color = borderColor(index);
           const isWide = colSpan >= 2;
           const isTall = rowSpan >= 2;
+          const isExpanded = expandedId === playlist.id;
+          // Use compact embed for small (1×1) cards, full for larger ones
+          const useCompact = colSpan === 1 && rowSpan === 1;
 
           return (
             <article
               key={playlist.id}
-              className={`bento-card bento-card--${color} bento-col-${colSpan} bento-row-${rowSpan}`}
+              className={`bento-card bento-card--${color} bento-col-${isExpanded ? 4 : colSpan} bento-row-${isExpanded ? 2 : rowSpan} ${isExpanded ? 'bento-card--expanded' : ''}`}
+              onClick={() => handleCardClick(playlist.id)}
             >
               {/* Image */}
-              <div className="bento-card__img-wrap">
+              <div className={`bento-card__img-wrap ${isExpanded ? 'bento-card__img-wrap--dimmed' : ''}`}>
                 <img
                   src={playlist.placeholderImage}
                   alt={playlist.title}
@@ -71,16 +77,29 @@ export default function BentoLayout() {
                 <div className={`bento-card__img-overlay bento-card__img-overlay--${color}`} />
               </div>
 
+              {/* Spotify Embed (shown when expanded) */}
+              {isExpanded && (
+                <div className="bento-card__spotify">
+                  <SpotifyEmbed
+                    spotifyId={playlist.spotifyId}
+                    compact={useCompact}
+                  />
+                </div>
+              )}
+
               {/* Text */}
-              <div className="bento-card__body">
+              <div className={`bento-card__body ${isExpanded ? 'bento-card__body--expanded' : ''}`}>
                 <p className={`bento-card__curator bento-card__curator--${color}`}>
                   {playlist.curator}
                 </p>
-                <h2 className={`bento-card__title ${isWide || isTall ? 'bento-card__title--lg' : ''}`}>
+                <h2 className={`bento-card__title ${isWide || isTall || isExpanded ? 'bento-card__title--lg' : ''}`}>
                   {playlist.title}
                 </h2>
-                {(isWide || isTall) && (
+                {(isWide || isTall) && !isExpanded && (
                   <p className="bento-card__desc">{playlist.description}</p>
+                )}
+                {!isExpanded && (
+                  <p className="bento-card__play-hint">▶ Click to play</p>
                 )}
               </div>
 

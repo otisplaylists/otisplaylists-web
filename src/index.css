@@ -293,6 +293,42 @@ body,
 .bento-card__corner--cyan    { background: #00ffff; }
 .bento-card__corner--magenta { background: #ff00ff; }
 
+/* ── Expanded card state ── */
+.bento-card--expanded {
+  z-index: 10;
+  grid-row: span 2 !important;
+}
+
+.bento-card__img-wrap--dimmed .bento-card__img {
+  filter: brightness(0.2) saturate(0.5);
+}
+
+/* ── Spotify embed ── */
+.bento-card__spotify {
+  position: relative;
+  z-index: 3;
+  padding: 1rem 1.25rem 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.bento-card__body--expanded {
+  padding-bottom: 0.75rem;
+}
+
+/* ── Play hint ── */
+.bento-card__play-hint {
+  font-size: 0.65rem;
+  color: #ffffff66;
+  margin: 0.3rem 0 0;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+
+.bento-card:hover .bento-card__play-hint {
+  color: #00ffff;
+}
+
 /* ── Footer ── */
 .bento-footer {
   margin-top: 2.5rem;
@@ -827,6 +863,694 @@ body,
 
   .term-entry__details {
     padding-left: 2rem;
+  }
+}
+
+/* ════════════════════════════════════════
+   CASSETTE TAPE LAYOUT
+════════════════════════════════════════ */
+.cassette-page {
+  min-height: 100vh;
+  background-color: #0a0a0a;
+  background-image:
+    radial-gradient(ellipse at 20% 50%, #00ffff08 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 50%, #ff00ff08 0%, transparent 50%);
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  padding: 2rem 1.5rem 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* ── Header ── */
+.cassette-header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding-top: 1rem;
+}
+
+.cassette-header__logo {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.cassette-header__logo-ot {
+  color: #00ffff;
+  text-shadow: 0 0 20px #00ffff88, 0 0 40px #00ffff44;
+}
+
+.cassette-header__logo-pl {
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff88, 0 0 40px #ff00ff44;
+}
+
+.cassette-header__sub {
+  font-size: 1rem;
+  color: #888;
+  letter-spacing: 0.05em;
+}
+
+.cassette-header__link {
+  color: #00ffff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.cassette-header__link:hover {
+  color: #ff00ff;
+}
+
+/* ── Grid ── */
+.cassette-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  perspective: 1200px;
+}
+
+/* ── Tape card (3D flip container) ── */
+.cassette-tape {
+  position: relative;
+  height: 200px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cassette-tape--flipped {
+  transform: rotateY(180deg);
+}
+
+.cassette-tape:hover {
+  z-index: 2;
+}
+
+/* ── Face (shared front/back) ── */
+.cassette-tape__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  padding: 0.75rem;
+  overflow: hidden;
+}
+
+/* ── Front ── */
+.cassette-tape__front {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  box-shadow: inset 0 2px 8px #00000088;
+}
+
+.cassette-tape__front--cyan {
+  border-color: #00ffff33;
+  box-shadow: inset 0 2px 8px #00000088, 0 0 8px #00ffff11;
+}
+
+.cassette-tape__front--magenta {
+  border-color: #ff00ff33;
+  box-shadow: inset 0 2px 8px #00000088, 0 0 8px #ff00ff11;
+}
+
+.cassette-tape:hover .cassette-tape__front--cyan {
+  border-color: #00ffff88;
+  box-shadow: inset 0 2px 8px #00000088, 0 0 16px #00ffff33, 0 0 32px #00ffff11;
+}
+
+.cassette-tape:hover .cassette-tape__front--magenta {
+  border-color: #ff00ff88;
+  box-shadow: inset 0 2px 8px #00000088, 0 0 16px #ff00ff33, 0 0 32px #ff00ff11;
+}
+
+/* ── Back ── */
+.cassette-tape__back {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  transform: rotateY(180deg);
+  box-shadow: inset 0 2px 8px #00000088;
+}
+
+.cassette-tape__back--cyan {
+  border-color: #00ffff44;
+  background: linear-gradient(135deg, #0a1a1a 0%, #1a1a1a 100%);
+}
+
+.cassette-tape__back--magenta {
+  border-color: #ff00ff44;
+  background: linear-gradient(135deg, #1a0a1a 0%, #1a1a1a 100%);
+}
+
+/* ── Top edge ── */
+.cassette-tape__top-edge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.cassette-tape__screw {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #333;
+  border: 1px solid #555;
+  position: relative;
+}
+
+.cassette-tape__screw::after {
+  content: '+';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6px;
+  color: #666;
+  line-height: 1;
+}
+
+.cassette-tape__side-label {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: #555;
+  text-transform: uppercase;
+}
+
+/* ── Label area (front) ── */
+.cassette-tape__label {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 0.75rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.cassette-tape__label--cyan {
+  background: linear-gradient(180deg, #0d2626 0%, #0a1a1a 100%);
+  border: 1px solid #00ffff33;
+}
+
+.cassette-tape__label--magenta {
+  background: linear-gradient(180deg, #260d26 0%, #1a0a1a 100%);
+  border: 1px solid #ff00ff33;
+}
+
+.cassette-tape__label-curator {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 0.25rem;
+}
+
+.cassette-tape__label-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-align: center;
+  color: #fff;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px #000;
+}
+
+.cassette-tape__label-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 0.5rem;
+  width: 60%;
+}
+
+.cassette-tape__label-lines span {
+  height: 1px;
+  background: #ffffff22;
+  border-radius: 1px;
+}
+
+/* ── Reels ── */
+.cassette-tape__reels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 0.4rem 0;
+}
+
+.cassette-tape__reel {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.cassette-tape__reel--cyan {
+  border-color: #00ffff44;
+  box-shadow: 0 0 6px #00ffff22;
+}
+
+.cassette-tape__reel--magenta {
+  border-color: #ff00ff44;
+  box-shadow: 0 0 6px #ff00ff22;
+}
+
+.cassette-tape__reel-hub {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #222;
+  border: 2px solid #444;
+}
+
+.cassette-tape__tape-window {
+  width: 40px;
+  height: 8px;
+  background: #111;
+  border-radius: 4px;
+  border: 1px solid #333;
+}
+
+/* ── Bottom edge ── */
+.cassette-tape__bottom-edge {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.25rem;
+}
+
+.cassette-tape__hint {
+  font-size: 0.55rem;
+  color: #444;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+
+.cassette-tape:hover .cassette-tape__hint {
+  color: #888;
+}
+
+/* ── Back content ── */
+.cassette-tape__back-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+}
+
+.cassette-tape__back-title {
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.5rem;
+  text-shadow: 0 0 8px #00ffff33;
+}
+
+.cassette-tape__back-desc {
+  font-size: 0.8rem;
+  color: #bbb;
+  line-height: 1.6;
+  margin: 0 0 0.75rem;
+}
+
+.cassette-tape__back-curator {
+  font-size: 0.65rem;
+  color: #666;
+  font-style: italic;
+  margin: 0;
+  letter-spacing: 0.05em;
+}
+
+/* ── Footer ── */
+.cassette-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.cassette-footer__text {
+  font-size: 0.85rem;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+.cassette-footer__link {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: text-shadow 0.2s;
+}
+
+.cassette-footer__link:hover {
+  text-shadow: 0 0 8px #00ffff;
+}
+
+/* ── Cassette responsive ── */
+@media (max-width: 640px) {
+  .cassette-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cassette-tape {
+    height: 180px;
+  }
+}
+
+/* ════════════════════════════════════════
+   ORBIT LAYOUT (Radial)
+════════════════════════════════════════ */
+.orbit-page {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.5rem;
+  overflow: hidden;
+}
+
+/* ── Split layout ── */
+.orbit-split {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  flex: 1;
+  gap: 2rem;
+}
+
+.orbit-split__left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orbit-split__right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Stage (contains ring + center) ── */
+.orbit-stage {
+  position: relative;
+  width: min(80vw, 600px);
+  height: min(80vw, 600px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+  user-select: none;
+}
+
+.orbit-stage:active {
+  cursor: grabbing;
+}
+
+/* ── Center logo ── */
+.orbit-center {
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+}
+
+.orbit-center__otis {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #00ffff;
+  text-shadow: 0 0 20px #00ffff88, 0 0 40px #00ffff44;
+  line-height: 1;
+}
+
+.orbit-center__playlists {
+  font-size: clamp(0.9rem, 2.5vw, 1.5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff88, 0 0 40px #ff00ff44;
+  line-height: 1;
+}
+
+/* ── Rotating ring ── */
+.orbit-ring {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Individual card (positioned on the ring) ── */
+.orbit-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin-left: -50px;
+  margin-top: -50px;
+  transform:
+    rotate(var(--angle))
+    translateY(calc(min(40vw, 250px) * -1))
+    rotate(var(--counter-angle));
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+.orbit-card--active {
+  opacity: 1;
+  z-index: 5;
+}
+
+.orbit-card__inner {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #ffffff22;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.orbit-card--active .orbit-card__inner {
+  border-color: #00ffff88;
+  box-shadow: 0 0 20px #00ffff44, 0 0 40px #00ffff22;
+  transform: scale(1.3);
+}
+
+.orbit-card:not(.orbit-card--active):hover .orbit-card__inner {
+  border-color: #ff00ff66;
+  box-shadow: 0 0 12px #ff00ff33;
+  transform: scale(1.1);
+}
+
+.orbit-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.6) saturate(0.7);
+  transition: filter 0.3s ease;
+}
+
+.orbit-card--active .orbit-card__img {
+  filter: brightness(0.5) saturate(1.2);
+}
+
+.orbit-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, #000000cc 0%, transparent 60%);
+}
+
+.orbit-card__title {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  right: 6px;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 1px 3px #000;
+}
+
+/* ── Navigation arrows — removed ── */
+
+/* ── Header ── */
+.orbit-header {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.orbit-header__logo {
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.orbit-header__logo-ot {
+  color: #00ffff;
+  text-shadow: 0 0 20px #00ffff88, 0 0 40px #00ffff44;
+}
+
+.orbit-header__logo-pl {
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff88, 0 0 40px #ff00ff44;
+}
+
+.orbit-header__sub {
+  font-size: 1rem;
+  color: #888;
+  letter-spacing: 0.05em;
+}
+
+.orbit-header__link {
+  color: #00ffff;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.orbit-header__link:hover {
+  color: #ff00ff;
+}
+
+/* ── Hint text ── */
+.orbit-hint {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.orbit-hint__text {
+  font-size: 0.75rem;
+  color: #555;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  animation: wheel-hint-pulse 2s ease-in-out infinite;
+}
+
+/* ── Info panel ── */
+.orbit-info {
+  text-align: left;
+  max-width: 400px;
+}
+
+.orbit-info__curator {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #ff00ff;
+  margin: 0 0 0.6rem;
+}
+
+.orbit-info__title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.75rem;
+  text-shadow: 0 0 12px #00ffff44;
+}
+
+.orbit-info__desc {
+  font-size: 1rem;
+  color: #aaa;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.orbit-info__spotify {
+  margin-top: 1.5rem;
+}
+
+/* ── Footer ── */
+.orbit-footer {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.orbit-footer__text {
+  font-size: 0.85rem;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+.orbit-footer__link {
+  color: #00ffff;
+  text-decoration: none;
+  font-weight: 700;
+  transition: text-shadow 0.2s;
+}
+
+.orbit-footer__link:hover {
+  text-shadow: 0 0 8px #00ffff;
+}
+
+/* ── Orbit responsive ── */
+@media (max-width: 768px) {
+  .orbit-split {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .orbit-split__right {
+    justify-content: center;
+  }
+
+  .orbit-info {
+    text-align: center;
+  }
+
+  .orbit-stage {
+    width: 90vw;
+    height: 90vw;
+  }
+
+  .orbit-card {
+    width: 72px;
+    height: 72px;
+    margin-left: -36px;
+    margin-top: -36px;
+    transform:
+      rotate(var(--angle))
+      translateY(calc(min(42vw, 200px) * -1))
+      rotate(var(--counter-angle));
+  }
+
+  .orbit-card__title {
+    font-size: 0.45rem;
+  }
+
+  .orbit-info__title {
+    font-size: 1.4rem;
+  }
+
+  .orbit-info__desc {
+    font-size: 0.85rem;
   }
 }
 

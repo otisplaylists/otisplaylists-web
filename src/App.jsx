@@ -2,11 +2,14 @@ import { useState, useEffect } from 'react'
 import BentoLayout from './components/BentoLayout.jsx'
 import WheelLayout from './components/WheelLayout.jsx'
 import TerminalLayout from './components/TerminalLayout.jsx'
+import OrbitLayout from './components/OrbitLayout.jsx'
+import CassetteLayout from './components/CassetteLayout.jsx'
 
 const LAYOUTS = [
   { id: 'bento', label: 'Bento' },
   { id: 'wheel', label: 'Wheel' },
-  { id: 'terminal', label: 'Terminal' },
+  { id: 'orbit', label: 'Orbit' },
+  { id: 'cassette', label: 'Cassette' },
 ]
 
 const MOBILE_BREAKPOINT = 768
@@ -62,6 +65,8 @@ function App() {
         {activeLayout === 'bento' && <BentoLayout />}
         {activeLayout === 'wheel' && <WheelLayout />}
         {activeLayout === 'terminal' && <TerminalLayout />}
+        {activeLayout === 'orbit' && <OrbitLayout />}
+        {activeLayout === 'cassette' && <CassetteLayout />}
       </div>
     </>
   )
