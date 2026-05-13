@@ -1,9 +1,11 @@
 import { useRef, useEffect, useState } from 'react';
 import mockPlaylists from '../data/mockPlaylists.js';
+import SpotifyEmbed from './SpotifyEmbed.jsx';
 
 export default function WheelLayout() {
   const scrollRef = useRef(null);
   const [centerIndex, setCenterIndex] = useState(0);
+  const [flippedId, setFlippedId] = useState(null);
 
   useEffect(() => {
     const container = scrollRef.current;
@@ -31,11 +33,14 @@ export default function WheelLayout() {
     };
 
     container.addEventListener('scroll', handleScroll, { passive: true });
-    // Initial calculation
     handleScroll();
 
     return () => container.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleCardClick = (id) => {
+    setFlippedId(flippedId === id ? null : id);
+  };
 
   return (
     <div className="wheel-page">
@@ -68,34 +73,52 @@ export default function WheelLayout() {
           const isCenter = index === centerIndex;
           const isAdjacent =
             index === centerIndex - 1 || index === centerIndex + 1;
+          const isFlipped = flippedId === playlist.id;
 
           return (
-            <article
+            <div
               key={playlist.id}
-              className={`wheel-card snap-center ${
+              className={`wheel-card-wrapper snap-center ${
                 isCenter
                   ? 'wheel-card--active'
                   : isAdjacent
                   ? 'wheel-card--adjacent'
                   : 'wheel-card--distant'
               }`}
+              onClick={() => handleCardClick(playlist.id)}
             >
-              <div className="wheel-card__img-wrap">
-                <img
-                  src={playlist.placeholderImage}
-                  alt={playlist.title}
-                  className="wheel-card__img"
-                  loading="lazy"
-                />
-                <div className="wheel-card__img-overlay" />
-              </div>
+              <article
+                className={`wheel-card-flip ${isFlipped ? 'wheel-card-flip--flipped' : ''}`}
+              >
+                {/* Front */}
+                <div className="wheel-card-flip__face wheel-card-flip__front">
+                  <div className="wheel-card__img-wrap">
+                    <img
+                      src={playlist.placeholderImage}
+                      alt={playlist.title}
+                      className="wheel-card__img"
+                      loading="lazy"
+                    />
+                    <div className="wheel-card__img-overlay" />
+                  </div>
 
-              <div className="wheel-card__body">
-                <p className="wheel-card__curator">{playlist.curator}</p>
-                <h2 className="wheel-card__title">{playlist.title}</h2>
-                <p className="wheel-card__desc">{playlist.description}</p>
-              </div>
-            </article>
+                  <div className="wheel-card__body">
+                    <p className="wheel-card__curator">{playlist.curator}</p>
+                    <h2 className="wheel-card__title">{playlist.title}</h2>
+                    <p className="wheel-card__desc">{playlist.description}</p>
+                  </div>
+                </div>
+
+                {/* Back — Spotify embed */}
+                <div className="wheel-card-flip__face wheel-card-flip__back">
+                  <div className="wheel-card-flip__back-content">
+                    <p className="wheel-card-flip__back-title">{playlist.title}</p>
+                    <SpotifyEmbed spotifyId={playlist.spotifyId} compact={false} />
+                    <p className="wheel-card-flip__back-hint">click to flip back</p>
+                  </div>
+                </div>
+              </article>
+            </div>
           );
         })}
       </main>
