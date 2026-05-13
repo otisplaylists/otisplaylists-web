@@ -116,6 +116,34 @@ body,
   text-transform: uppercase;
 }
 
+/* ── Social icon row ── */
+.home-socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.25rem 0 1rem;
+}
+
+.home-socials__icon {
+  color: #888;
+  transition: color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-socials__icon:hover {
+  color: #00ffff;
+  transform: scale(1.2) translateY(-2px);
+  filter: drop-shadow(0 0 6px #00ffff88);
+}
+
+.home-socials__icon:nth-child(even):hover {
+  color: #ff00ff;
+  filter: drop-shadow(0 0 6px #ff00ff88);
+}
+
 /* ── Links ── */
 .home-links {
   display: flex;
