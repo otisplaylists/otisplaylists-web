@@ -71,6 +71,167 @@ body,
 }
 
 /* ════════════════════════════════════════
+   HOME / LINKTREE LAYOUT
+════════════════════════════════════════ */
+.home-page {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: system-ui, -apple-system, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+/* ── Header ── */
+.home-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.home-header__logo {
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+}
+
+.home-header__logo-ot {
+  color: #00ffff;
+  text-shadow: 0 0 20px #00ffff88, 0 0 40px #00ffff44;
+}
+
+.home-header__logo-pl {
+  color: #ff00ff;
+  text-shadow: 0 0 20px #ff00ff88, 0 0 40px #ff00ff44;
+}
+
+.home-header__sub {
+  font-size: 1rem;
+  color: #666;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ── Links ── */
+.home-links {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 420px;
+}
+
+.home-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid #ffffff22;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.home-link:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.home-link--cyan {
+  border-color: #00ffff33;
+}
+
+.home-link--cyan:hover {
+  border-color: #00ffff;
+  box-shadow: 0 0 16px #00ffff66, 0 0 32px #00ffff22;
+}
+
+.home-link--cyan:hover .home-link__label {
+  color: #00ffff;
+}
+
+.home-link--magenta {
+  border-color: #ff00ff33;
+}
+
+.home-link--magenta:hover {
+  border-color: #ff00ff;
+  box-shadow: 0 0 16px #ff00ff66, 0 0 32px #ff00ff22;
+}
+
+.home-link--magenta:hover .home-link__label {
+  color: #ff00ff;
+}
+
+.home-link__label {
+  position: relative;
+  z-index: 1;
+  transition: color 0.25s ease;
+}
+
+.home-link__arrow {
+  position: relative;
+  z-index: 1;
+  font-size: 1.2rem;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.home-link:hover .home-link__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Glow sweep animation on hover */
+.home-link__glow {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.home-link--cyan .home-link__glow {
+  background: linear-gradient(90deg, transparent 0%, #00ffff11 50%, transparent 100%);
+}
+
+.home-link--magenta .home-link__glow {
+  background: linear-gradient(90deg, transparent 0%, #ff00ff11 50%, transparent 100%);
+}
+
+.home-link:hover .home-link__glow {
+  opacity: 1;
+  animation: home-glow-sweep 0.8s ease-out;
+}
+
+@keyframes home-glow-sweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ── Footer ── */
+.home-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.home-footer__text {
+  font-size: 0.8rem;
+  color: #444;
+  letter-spacing: 0.1em;
+}
+
+/* ════════════════════════════════════════
    BENTO PAGE
 ════════════════════════════════════════ */
 .bento-page {

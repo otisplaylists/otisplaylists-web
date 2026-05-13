@@ -4,8 +4,10 @@ import WheelLayout from './components/WheelLayout.jsx'
 import TerminalLayout from './components/TerminalLayout.jsx'
 import OrbitLayout from './components/OrbitLayout.jsx'
 import CassetteLayout from './components/CassetteLayout.jsx'
+import HomeLayout from './components/HomeLayout.jsx'
 
 const LAYOUTS = [
+  { id: 'home', label: 'Home' },
   { id: 'bento', label: 'Bento' },
   { id: 'wheel', label: 'Wheel' },
   { id: 'orbit', label: 'Orbit' },
@@ -34,7 +36,7 @@ function App() {
   const [override, setOverride] = useState(null)
 
   // The effective layout: override wins, otherwise responsive default
-  const defaultLayout = isMobile ? 'wheel' : 'bento'
+  const defaultLayout = isMobile ? 'home' : 'home'
   const activeLayout = override || defaultLayout
 
   // Clear override when the screen crosses the breakpoint so it
@@ -62,6 +64,7 @@ function App() {
 
       {/* Layout content */}
       <div className="layout-content">
+        {activeLayout === 'home' && <HomeLayout />}
         {activeLayout === 'bento' && <BentoLayout />}
         {activeLayout === 'wheel' && <WheelLayout />}
         {activeLayout === 'terminal' && <TerminalLayout />}
