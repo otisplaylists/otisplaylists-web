@@ -67,7 +67,7 @@ body,
 }
 
 .layout-content {
-  padding-top: 60px;
+  padding-top: 0;
 }
 
 /* ════════════════════════════════════════
@@ -89,6 +89,51 @@ body,
 .home-header {
   text-align: center;
   margin-bottom: 3rem;
+}
+
+/* ── Profile picture ── */
+.home-pfp {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 1.5rem;
+}
+
+.home-pfp__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  filter: grayscale(1) contrast(1.1);
+  border: 2px solid #ffffff22;
+  transition: filter 0.3s ease, border-color 0.3s ease;
+}
+
+.home-pfp:hover .home-pfp__img {
+  filter: grayscale(0.5) contrast(1.05);
+  border-color: #00ffff88;
+}
+
+.home-pfp__ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: conic-gradient(#00ffff, #ff00ff, #00ffff) border-box;
+  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.6;
+  transition: opacity 0.3s ease;
+  animation: home-pfp-spin 4s linear infinite;
+}
+
+.home-pfp:hover .home-pfp__ring {
+  opacity: 1;
+}
+
+@keyframes home-pfp-spin {
+  to { transform: rotate(360deg); }
 }
 
 .home-header__logo {
@@ -257,6 +302,21 @@ body,
   font-size: 0.8rem;
   color: #444;
   letter-spacing: 0.1em;
+}
+
+.home-footer__contact {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #00ffff;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s, text-shadow 0.2s;
+}
+
+.home-footer__contact:hover {
+  color: #ff00ff;
+  text-shadow: 0 0 8px #ff00ff88;
 }
 
 /* ════════════════════════════════════════

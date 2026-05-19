@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-      {/* Fixed nav bar */}
+      {/* Nav bar hidden from users — uncomment to re-enable for testing
       <nav className="layout-nav">
         {LAYOUTS.map(({ id, label }) => (
           <button
@@ -61,6 +61,7 @@ function App() {
           </button>
         ))}
       </nav>
+      */}
 
       {/* Layout content */}
       <div className="layout-content">
