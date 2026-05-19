@@ -39,7 +39,7 @@ body,
 }
 
 .layout-nav__btn {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.1em;
@@ -77,12 +77,12 @@ body,
   min-height: 100vh;
   background-color: #000;
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 3rem 1.5rem;
+  padding: 0 1.5rem 3rem;
 }
 
 /* ── Header ── */
@@ -92,56 +92,65 @@ body,
 }
 
 /* ── Profile picture ── */
-.home-pfp {
+.home-pfp--fade {
   position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto 1.5rem;
+  width: 400px;
+  height: 400px;
+  margin: 0 auto -5rem;
 }
 
-.home-pfp__img {
+.home-pfp__img--fade {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 0;
+  border: none;
   filter: grayscale(1) contrast(1.1);
-  border: 2px solid #ffffff22;
-  transition: filter 0.3s ease, border-color 0.3s ease;
+  display: block;
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at center, black 40%, transparent 72%);
+  mask-image: radial-gradient(ellipse 70% 70% at center, black 40%, transparent 72%);
 }
 
-.home-pfp:hover .home-pfp__img {
-  filter: grayscale(0.5) contrast(1.05);
-  border-color: #00ffff88;
+/* ── Equalizer bars ── */
+.home-eq {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  height: 40px;
+  margin-bottom: 1.5rem;
 }
 
-.home-pfp__ring {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  border: 2px solid transparent;
-  background: conic-gradient(#00ffff, #ff00ff, #00ffff) border-box;
-  -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-  animation: home-pfp-spin 4s linear infinite;
+.home-eq__bar {
+  width: 4px;
+  border-radius: 2px;
+  animation: eq-bounce 3.5s ease-in-out infinite;
 }
 
-.home-pfp:hover .home-pfp__ring {
-  opacity: 1;
-}
+.home-eq__bar--1 { height: 20px; background: #00ffff; animation-delay: 0s; }
+.home-eq__bar--2 { height: 35px; background: #ff00ff; animation-delay: 0.1s; }
+.home-eq__bar--3 { height: 25px; background: #00ffff; animation-delay: 0.2s; }
+.home-eq__bar--4 { height: 45px; background: #ff00ff; animation-delay: 0.3s; }
+.home-eq__bar--5 { height: 55px; background: #00ffff; animation-delay: 0.15s; }
+.home-eq__bar--6 { height: 40px; background: #ff00ff; animation-delay: 0.25s; }
+.home-eq__bar--7 { height: 30px; background: #00ffff; animation-delay: 0.35s; }
+.home-eq__bar--8 { height: 50px; background: #ff00ff; animation-delay: 0.05s; }
+.home-eq__bar--9 { height: 22px; background: #00ffff; animation-delay: 0.4s; }
 
-@keyframes home-pfp-spin {
-  to { transform: rotate(360deg); }
+@keyframes eq-bounce {
+  0%, 100% { transform: scaleY(0.3); }
+  50% { transform: scaleY(1); }
 }
 
 .home-header__logo {
+  position: relative;
+  z-index: 2;
   font-size: clamp(3rem, 10vw, 6rem);
   font-weight: 900;
   letter-spacing: -0.02em;
   line-height: 1;
   margin-bottom: 0.75rem;
+  overflow: visible;
 }
 
 .home-header__logo-ot {
@@ -206,7 +215,7 @@ body,
   padding: 1rem 1.5rem;
   border-radius: 12px;
   background: #111;
-  border: 1px solid #ffffff22;
+  border: 2px solid #ffffff33;
   text-decoration: none;
   color: #fff;
   font-weight: 700;
@@ -319,6 +328,87 @@ body,
   text-shadow: 0 0 8px #ff00ff88;
 }
 
+/* ── Staggered fade-in animations ── */
+.home-anim {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: home-fade-in 0.6s ease forwards;
+}
+
+.home-anim--1  { animation-delay: 0ms; }
+.home-anim--2  { animation-delay: 150ms; }
+.home-anim--3  { animation-delay: 300ms; }
+.home-anim--4  { animation-delay: 420ms; }
+.home-anim--5  { animation-delay: 490ms; }
+.home-anim--6  { animation-delay: 560ms; }
+.home-anim--7  { animation-delay: 630ms; }
+.home-anim--8  { animation-delay: 700ms; }
+.home-anim--9  { animation-delay: 770ms; }
+.home-anim--10 { animation-delay: 840ms; }
+.home-anim--11 { animation-delay: 910ms; }
+
+@keyframes home-fade-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Title glow burst (one-shot) ── */
+.home-header__glow-burst {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00ffff33 0%, transparent 70%);
+  opacity: 0;
+  animation: home-glow-burst 1s ease-out 0.3s forwards;
+  pointer-events: none;
+}
+
+@keyframes home-glow-burst {
+  0% {
+    opacity: 0.8;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2);
+  }
+}
+
+/* ── Hover tilt (handled via JS, but reset transition) ── */
+.home-link {
+  transition: transform 0.15s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transform-style: preserve-3d;
+}
+
+/* ── Click ripple ── */
+.home-link__ripple {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%) scale(0);
+  animation: home-ripple 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+.home-link--cyan .home-link__ripple {
+  background: rgba(0, 255, 255, 0.3);
+}
+
+.home-link--magenta .home-link__ripple {
+  background: rgba(255, 0, 255, 0.3);
+}
+
+@keyframes home-ripple {
+  to {
+    transform: translate(-50%, -50%) scale(25);
+    opacity: 0;
+  }
+}
+
 /* ════════════════════════════════════════
    BENTO PAGE
 ════════════════════════════════════════ */
@@ -326,7 +416,7 @@ body,
   min-height: 100vh;
   background-color: #000;
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   padding: 2rem 1.5rem 3rem;
   max-width: 1400px;
   margin: 0 auto;
@@ -611,7 +701,7 @@ body,
   min-height: 100vh;
   background-color: #000;
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1191,7 +1281,7 @@ body,
     radial-gradient(ellipse at 20% 50%, #00ffff08 0%, transparent 50%),
     radial-gradient(ellipse at 80% 50%, #ff00ff08 0%, transparent 50%);
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   padding: 2rem 1.5rem 3rem;
   max-width: 1100px;
   margin: 0 auto;
@@ -1551,7 +1641,7 @@ body,
   min-height: 100vh;
   background-color: #000;
   color: #fff;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Quicksand', system-ui, -apple-system, sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;

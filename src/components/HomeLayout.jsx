@@ -118,23 +118,55 @@ const SOCIAL_ICONS = [
   },
 ];
 
+// Hover tilt handler — tilts card toward cursor
+function handleTiltMove(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+  const centerX = rect.width / 2;
+  const centerY = rect.height / 2;
+  const rotateX = ((y - centerY) / centerY) * -14;
+  const rotateY = ((x - centerX) / centerX) * 14;
+  card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-2px) scale(1.02)`;
+}
+
+function handleTiltLeave(e) {
+  e.currentTarget.style.transform = '';
+}
+
+// Ripple on click
+function handleRipple(e) {
+  const card = e.currentTarget;
+  const rect = card.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const ripple = document.createElement('span');
+  ripple.className = 'home-link__ripple';
+  ripple.style.left = `${x}px`;
+  ripple.style.top = `${y}px`;
+  card.appendChild(ripple);
+
+  setTimeout(() => ripple.remove(), 600);
+}
+
 export default function HomeLayout() {
   return (
     <div className="home-page">
       {/* Header */}
       <header className="home-header">
-        <div className="home-pfp">
-          <img src={profilePic} alt="OtisPlaylists" className="home-pfp__img" />
-          <div className="home-pfp__ring" />
+        <div className="home-pfp home-pfp--fade home-anim home-anim--1">
+          <img src={profilePic} alt="OtisPlaylists" className="home-pfp__img home-pfp__img--fade" />
         </div>
 
-        <div className="home-header__logo">
+        <div className="home-header__logo home-anim home-anim--2">
           <span className="home-header__logo-ot">OTIS</span>
           <span className="home-header__logo-pl">PLAYLISTS</span>
         </div>
 
         {/* Social icon row */}
-        <div className="home-socials">
+        <div className="home-socials home-anim home-anim--3">
           {SOCIAL_ICONS.map(({ id, url, title, icon }) => (
             <a
               key={id}
@@ -150,18 +182,21 @@ export default function HomeLayout() {
           ))}
         </div>
 
-        <p className="home-header__sub">Curated sounds · All platforms</p>
+        <p className="home-header__sub home-anim home-anim--3">Curated sounds · All platforms</p>
       </header>
 
       {/* Links */}
       <main className="home-links">
-        {LINKS.map(({ id, label, url, color }) => (
+        {LINKS.map(({ id, label, url, color }, index) => (
           <a
             key={id}
             href={url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`home-link home-link--${color}`}
+            className={`home-link home-link--${color} home-anim home-anim--${index + 4}`}
+            onMouseMove={handleTiltMove}
+            onMouseLeave={handleTiltLeave}
+            onClick={handleRipple}
           >
             <span className="home-link__label">{label}</span>
             <span className="home-link__arrow">→</span>
@@ -171,7 +206,7 @@ export default function HomeLayout() {
       </main>
 
       {/* Footer */}
-      <footer className="home-footer">
+      <footer className="home-footer home-anim home-anim--11">
         <span className="home-footer__text">@otisplaylists everywhere</span>
         <a href="mailto:otis9205@gmail.com" className="home-footer__contact">Contact Me</a>
       </footer>
