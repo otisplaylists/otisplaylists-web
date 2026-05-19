@@ -1,3 +1,5 @@
+import profilePic from '../assets/black-pfp-1.JPG';
+
 const LINKS = [
   {
     id: 'tiktok',
@@ -37,7 +39,7 @@ const LINKS = [
   },
   {
     id: 'american-eagle',
-    label: 'American Eagle',
+    label: 'OTIS X American Eagle',
     url: 'https://www.ae.com/us/en?utm_medium=affiliate&utm_source=community&utm_content=ae&ambassadorID=78cde015-0678-4ed8-abe3-e064e0047a9e',
     color: 'cyan',
   },
@@ -121,6 +123,11 @@ export default function HomeLayout() {
     <div className="home-page">
       {/* Header */}
       <header className="home-header">
+        <div className="home-pfp">
+          <img src={profilePic} alt="OtisPlaylists" className="home-pfp__img" />
+          <div className="home-pfp__ring" />
+        </div>
+
         <div className="home-header__logo">
           <span className="home-header__logo-ot">OTIS</span>
           <span className="home-header__logo-pl">PLAYLISTS</span>
@@ -166,6 +173,7 @@ export default function HomeLayout() {
       {/* Footer */}
       <footer className="home-footer">
         <span className="home-footer__text">@otisplaylists everywhere</span>
+        <a href="mailto:otis9205@gmail.com" className="home-footer__contact">Contact Me</a>
       </footer>
     </div>
   );
